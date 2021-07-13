@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShoesStore.Data;
+using ShoesStore.Data.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace ShoesStore
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options => options
+            services.AddDbContext<ShoesStoreDbContext>(options => options
             .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -37,7 +38,7 @@ namespace ShoesStore
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                 })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ShoesStoreDbContext>();
 
             services.AddControllersWithViews();
         }
@@ -45,6 +46,9 @@ namespace ShoesStore
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            app.PrepareDatabase();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
