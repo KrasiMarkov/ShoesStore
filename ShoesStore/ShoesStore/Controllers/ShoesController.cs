@@ -22,6 +22,26 @@ namespace ShoesStore.Controllers
 
         });
 
+        public IActionResult All()
+        {
+            var shoes = this.data
+                            .Shoes
+                            .OrderByDescending(s => s.Id)
+                            .Select(s => new ShoeListingViewModel
+                            {
+                                Id = s.Id,
+                                Brand = s.Brand,
+                                Model = s.Model,
+                                ImageUrl = s.ImageUrl,
+                                Size = s.Size,
+                                Category = s.Category.Name
+                            })
+                            .ToList();
+
+            return View(shoes);
+
+        }
+
         [HttpPost]
         public IActionResult Add(AddShoeFormModel shoe)
         {
@@ -54,7 +74,7 @@ namespace ShoesStore.Controllers
 
             this.data.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(All));
            
         }
 

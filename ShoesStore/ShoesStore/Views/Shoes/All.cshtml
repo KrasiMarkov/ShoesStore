@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ShoeListingViewModel>
+
+<div class="row">
+    @foreach (var shoe in Model)
+    {
+    <div class="col-md-3">
+        <div class="card">
+            <img class="card-img-top" src="@shoe.ImageUrl" alt="@shoe.Brand @shoe.Model @shoe.Size (@shoe.Category)">
+            <div class="card-body text-center">
+                <h5 class="card-title text-center">@shoe.Brand @shoe.Model (@shoe.Size)</h5>
+                <a asp-controller="Shoes" asp-action="Details" asp-route-id="@shoe.Id" class="btn btn-primary">View More</a>
+            </div>
+        </div>
+    </div>
+    }
+</div>
