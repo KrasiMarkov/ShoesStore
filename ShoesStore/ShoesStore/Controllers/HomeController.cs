@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using ShoesStore.Data;
 using ShoesStore.Models;
+using ShoesStore.Models.Home;
 using ShoesStore.Models.Shoes;
 using System;
 using System.Collections.Generic;
@@ -20,22 +21,32 @@ namespace ShoesStore.Controllers
 
         public IActionResult Index()
         {
+            var totalShoes = this.data
+                                 .Shoes
+                                 .Count();
+                                 
+
             var shoes = this.data
                           .Shoes
                           .OrderByDescending(s => s.Id)
-                          .Select(s => new ShoeListingViewModel
+                          .Select(s => new ShoeIndexViewModel
                           {
                               Id = s.Id,
                               Brand = s.Brand,
                               Model = s.Model,
                               ImageUrl = s.ImageUrl,
-                              Size = s.Size,
-                              Category = s.Category.Name
+                              Size = s.Size
                           })
-                          .Take(4)
+                          .Take(8)
                           .ToList();
 
-            return View(shoes);
+            return View(new IndexViewModel
+            {
+                TotalShoes = totalShoes,
+                Shoes = shoes
+
+            });
+            
 
 
             
