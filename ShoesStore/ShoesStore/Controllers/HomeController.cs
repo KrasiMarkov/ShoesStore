@@ -42,6 +42,7 @@ namespace ShoesStore.Controllers
 
             return View(new IndexViewModel
             {
+                
                 TotalShoes = totalShoes,
                 Shoes = shoes
 

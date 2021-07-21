@@ -3,8 +3,31 @@
 <form method="get">
     <div class="row mb-5">
         <div class="form-group col-md-3">
+            <div class="form-group">
+                <label asp-for="Brand"></label>
+                <select asp-for="Brand" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var brand in Model.Brands)
+                    {
+                        <option value="@brand">@brand</option>
+
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-md-3">
             <label asp-for="SearchTerm"></label>
             <input asp-for="SearchTerm" class="form-control" placeholder="Nike AirMax">
+        </div>
+        <div class="form-group col-md-3">
+            <div class="form-group">
+                <label asp-for="Sorting"></label>
+                <select asp-for="Sorting" class="form-control">
+                    <option value="0">Date Created</option>
+                    <option value="1">Size</option>
+                    <option value="2">Brand And Model</option>
+                </select>
+            </div>
         </div>
     </div>
 </form>

@@ -22,19 +22,32 @@ namespace ShoesStore.Controllers
 
         });
 
-        public IActionResult All(string searchTerm)
+        public IActionResult All([FromQuery] AllShoesQueryModel query)
         {
             var shoesQuery = this.data.Shoes.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            if (!string.IsNullOrWhiteSpace(query.Brand))
             {
-                shoesQuery = shoesQuery.Where(s => 
-                       (s.Brand + " " + s.Model).ToLower().Contains(searchTerm.ToLower()) ||
-                       s.Description.ToLower().Contains(searchTerm.ToLower()));
+                shoesQuery = shoesQuery.Where(s => s.Brand == query.Brand);
             }
 
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
+            {
+                shoesQuery = shoesQuery.Where(s => 
+                       (s.Brand + " " + s.Model).ToLower().Contains(query.SearchTerm.ToLower()) ||
+                       s.Description.ToLower().Contains(query.SearchTerm.ToLower()));
+            }
+
+            shoesQuery = query.Sorting switch
+            {
+                ShoesSorting.DateCreated => shoesQuery.OrderByDescending(s => s.Id),
+                ShoesSorting.Size => shoesQuery.OrderByDescending(s => s.Size),
+                ShoesSorting.BrandAndModel => shoesQuery.OrderBy(s => s.Brand).ThenBy(s => s.Model),
+                _ => shoesQuery.OrderByDescending(s => s.Id)
+            };
+
+
             var shoes = shoesQuery
-                            .OrderByDescending(s => s.Id)
                             .Select(s => new ShoeListingViewModel
                             {
                                 Id = s.Id,
@@ -46,13 +59,18 @@ namespace ShoesStore.Controllers
                             })
                             .ToList();
 
-            return View(new AllShoesQueryModel 
-            {
-                SearchTerm = searchTerm,
-                Shoes = shoes
-               
-            });
+            var shoesBrands = this.data
+                                 .Shoes
+                                 .Select(s => s.Brand)
+                                 .Distinct()
+                                 .OrderBy(br => br)
+                                 .ToList();
 
+            query.Brands = shoesBrands;
+            query.Shoes = shoes;
+
+            return View(query); 
+            
         }
 
         [HttpPost]

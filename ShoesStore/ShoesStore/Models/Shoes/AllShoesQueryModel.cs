@@ -8,14 +8,16 @@ namespace ShoesStore.Models.Shoes
 {
     public class AllShoesQueryModel
     {
-        public IEnumerable<string> Brands { get; init; }
+        public string Brand { get; init; }
+
+        public IEnumerable<string> Brands { get; set; }
 
         [Display(Name = "Search")]
         public string SearchTerm { get; init; }
 
         public ShoesSorting Sorting { get; init; }
 
-        public IEnumerable<ShoeListingViewModel> Shoes { get; init; }
+        public IEnumerable<ShoeListingViewModel> Shoes { get; set; }
 
     }
 }
