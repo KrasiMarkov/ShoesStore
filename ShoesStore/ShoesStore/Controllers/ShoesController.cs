@@ -22,10 +22,18 @@ namespace ShoesStore.Controllers
 
         });
 
-        public IActionResult All()
+        public IActionResult All(string searchTerm)
         {
-            var shoes = this.data
-                            .Shoes
+            var shoesQuery = this.data.Shoes.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                shoesQuery = shoesQuery.Where(s => 
+                       (s.Brand + " " + s.Model).ToLower().Contains(searchTerm.ToLower()) ||
+                       s.Description.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            var shoes = shoesQuery
                             .OrderByDescending(s => s.Id)
                             .Select(s => new ShoeListingViewModel
                             {
@@ -38,7 +46,12 @@ namespace ShoesStore.Controllers
                             })
                             .ToList();
 
-            return View(shoes);
+            return View(new AllShoesQueryModel 
+            {
+                SearchTerm = searchTerm,
+                Shoes = shoes
+               
+            });
 
         }
 

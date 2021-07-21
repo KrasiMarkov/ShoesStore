@@ -1,16 +1,28 @@
-﻿@model IEnumerable<ShoeListingViewModel>
+﻿@model AllShoesQueryModel
 
-<div class="row">
-    @foreach (var shoe in Model)
-    {
-    <div class="col-md-3">
-        <div class="card mb-3">
-            <img class="card-img-top" src="@shoe.ImageUrl" alt="@shoe.Brand @shoe.Model @shoe.Size (@shoe.Category)">
-            <div class="card-body text-center">
-                <h5 class="card-title text-center">@shoe.Brand @shoe.Model (@shoe.Size)</h5>
-                <a asp-controller="Shoes" asp-action="Details" asp-route-id="@shoe.Id" class="btn btn-primary">View More</a>
-            </div>
+<form method="get">
+    <div class="row mb-5">
+        <div class="form-group col-md-3">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="Nike AirMax">
         </div>
     </div>
+</form>
+
+
+
+
+<div class="row">
+    @foreach (var shoe in Model.Shoes)
+    {
+        <div class="col-md-3">
+            <div class="card mb-3">
+                <img class="card-img-top" src="@shoe.ImageUrl" alt="@shoe.Brand @shoe.Model @shoe.Size (@shoe.Category)">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-center">@shoe.Brand @shoe.Model (@shoe.Size)</h5>
+                    <a asp-controller="Shoes" asp-action="Details" asp-route-id="@shoe.Id" class="btn btn-primary">View More</a>
+                </div>
+            </div>
+        </div>
     }
 </div>
