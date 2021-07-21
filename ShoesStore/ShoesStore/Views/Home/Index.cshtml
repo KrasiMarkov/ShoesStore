@@ -5,16 +5,9 @@
     ViewData["Title"] = "Best Shoes";
 }
 
-@{
-    var shoes = Model.Shoes;
-    var firstShoe = shoes.Any() ? shoes[0] : null;
-    var secondShoe = shoes.Count > 1 ? shoes[1] : null;
-    var thirdShoe = shoes.Count > 2 ? shoes[2] : null;
-    var forthShoe = shoes.Count > 3 ? shoes[3] : null;
 
-}
 
-@if (!shoes.Any())
+@if (!Model.Shoes.Any())
 {
     <div class="jumbotron">
         <h1 class="display-4">Wellcome to the best place for Shoes!</h1>
@@ -31,42 +24,18 @@
 
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
-        @if (firstShoe != null)
+        @for (int i = 0; i < Model.Shoes.Count; i++)
         {
-            <div class="carousel-item active">
-                <img class="d-block w-50" src="@firstShoe.ImageUrl" alt="@firstShoe.Brand @firstShoe.Model">
+            var shoe = Model.Shoes[i];
+
+            <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
+                <img class="d-block w-50" src="@shoe.ImageUrl" alt="@shoe.Brand @shoe.Model">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5><a class="btn btn-primary" asp-controller="Shoes" asp-action="Details" asp-all-route-id="@firstShoe.Id">@firstShoe.Brand @firstShoe.Model</a></h5>
+                    <h5><a class="btn btn-primary" asp-controller="Shoes" asp-action="Details" asp-all-route-id="@shoe.Id">@shoe.Brand @shoe.Model</a></h5>
                 </div>
             </div>
         }
-        @if (secondShoe != null)
-        {
-            <div class="carousel-item">
-                <img class="d-block w-50" src="@secondShoe.ImageUrl" alt="@secondShoe.Brand @secondShoe.Model">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5><a class="btn btn-primary" asp-controller="Shoes" asp-action="Details" asp-all-route-id="@secondShoe.Id">@secondShoe.Brand @secondShoe.Model</a></h5>
-                </div>
-            </div>
-        }
-        @if (thirdShoe != null)
-        {
-            <div class="carousel-item">
-                <img class="d-block w-50" src="@thirdShoe.ImageUrl" alt="@thirdShoe.Brand @thirdShoe.Model">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5><a class="btn btn-primary" asp-controller="Shoes" asp-action="Details" asp-all-route-id="@thirdShoe.Id">@thirdShoe.Brand @thirdShoe.Model</a></h5>
-                </div>
-            </div>
-        }
-        @if (forthShoe != null)
-        {
-            <div class="carousel-item">
-                <img class="d-block w-50" src="@forthShoe.ImageUrl" alt="@forthShoe.Brand @forthShoe.Model">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5><a class="btn btn-primary" asp-controller="Shoes" asp-action="Details" asp-all-route-id="@forthShoe.Id">@forthShoe.Brand @forthShoe.Model</a></h5>
-                </div>
-            </div>
-        }
+      
     </div>
     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

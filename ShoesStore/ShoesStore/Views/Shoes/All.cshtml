@@ -1,5 +1,9 @@
 ﻿@model AllShoesQueryModel
 
+@{
+    ViewData["Title"] = "All Shoes";
+}
+
 <form method="get">
     <div class="row mb-5">
         <div class="form-group col-md-3">
@@ -33,9 +37,41 @@
 </form>
 
 
+@{
+    var previosPage = Model.CurrentPage - 1;
+
+    if (previosPage < 1)
+    {
+        previosPage = 1;
+    }
+
+    var maxPage = Math.Ceiling((double)Model.TotalShoes / AllShoesQueryModel.ShoesPerPage);
 
 
-<div class="row">
+
+
+}
+<div class="row mb-5">
+    <div class="col-md-6">
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)" 
+           asp-controller="Shoes" asp-action="All" 
+           asp-route-currentPage="@previosPage"
+           asp-route-brand="@Model.Brand"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.Sorting)"><<</a>
+    </div>
+    <div class="col-md-6">
+        <a class="btn btn-primary float-right @(Model.CurrentPage == maxPage ? "disabled" : string.Empty)" 
+           asp-controller="Shoes" 
+           asp-action="All" 
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-brand="@Model.Brand"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.Sorting)">>></a>
+    </div>
+</div>
+
+<div class="row mb-5">
     @foreach (var shoe in Model.Shoes)
     {
         <div class="col-md-3">

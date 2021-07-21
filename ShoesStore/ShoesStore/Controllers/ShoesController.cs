@@ -48,6 +48,8 @@ namespace ShoesStore.Controllers
 
 
             var shoes = shoesQuery
+                            .Skip((query.CurrentPage - 1) * AllShoesQueryModel.ShoesPerPage)
+                            .Take(AllShoesQueryModel.ShoesPerPage)
                             .Select(s => new ShoeListingViewModel
                             {
                                 Id = s.Id,
@@ -66,8 +68,11 @@ namespace ShoesStore.Controllers
                                  .OrderBy(br => br)
                                  .ToList();
 
+            var totalShoes = shoesQuery.Count();
+
             query.Brands = shoesBrands;
             query.Shoes = shoes;
+            query.TotalShoes = totalShoes;
 
             return View(query); 
             

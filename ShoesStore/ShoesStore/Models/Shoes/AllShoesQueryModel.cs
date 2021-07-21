@@ -8,6 +8,8 @@ namespace ShoesStore.Models.Shoes
 {
     public class AllShoesQueryModel
     {
+        public const int ShoesPerPage = 3;
+
         public string Brand { get; init; }
 
         public IEnumerable<string> Brands { get; set; }
@@ -16,6 +18,10 @@ namespace ShoesStore.Models.Shoes
         public string SearchTerm { get; init; }
 
         public ShoesSorting Sorting { get; init; }
+
+        public int CurrentPage { get; init; } = 1;
+
+        public int TotalShoes { get; set; }
 
         public IEnumerable<ShoeListingViewModel> Shoes { get; set; }
 
