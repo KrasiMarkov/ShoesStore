@@ -8,7 +8,7 @@ namespace ShoesStore.Models.Shoes
 {
     public class AllShoesQueryModel
     {
-        public const int ShoesPerPage = 3;
+        public const int ShoesPerPage = 4;
 
         public string Brand { get; init; }
 

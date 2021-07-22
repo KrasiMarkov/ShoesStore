@@ -7,29 +7,33 @@ namespace ShoesStore.Data
 {
     public class DataConstants
     {
-        public const int ShoeBrandMinLength = 2;
+        public class Shoe 
+        {
+            public const int BrandMinLength = 2;
+            public const int BrandMaxLength = 30;
+            public const int ModelMinLength = 2;
+            public const int ModelMaxLength = 50;
+            public const int SizeMinValue = 20;
+            public const int SizeMaxValue = 50;
+            public const int ColorMinLength = 2;
+            public const int ColorMaxLength = 20;
+            public const int MatterMinLength = 2;
+            public const int MatterMaxLength = 30;
+            public const int DescriptionMinLength = 10;
+            public const int DescriptionMaxLength = 2000;
+        }
 
-        public const int ShoeBrandMaxLength = 30;
+        public class Category 
+        {
+            public const int NameMaxLength = 25;
+        }
 
-        public const int ShoeModelMinLength = 2;
+        public class Seller 
+        {
+            public const int NameMaxLength = 25;
+            public const int PhoneNumberMaxLength = 30;
 
-        public const int ShoeModelMaxLength = 50;
-
-        public const int ShoeSizeMinValue = 20;
-
-        public const int ShoeSizeMaxValue = 50;
-
-        public const int ShoeColorMinLength = 2;
-
-        public const int ShoeColorMaxLength = 20;
-
-        public const int ShoeMatterMinLength = 2;
-
-        public const int ShoeMatterMaxLength = 30;
-
-        public const int ShoeDescriptionMinLength = 10;
-
-        public const int ShoeDescriptionMaxLength = 2000;
+        }
 
     }
 }

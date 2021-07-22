@@ -3,34 +3,34 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using static ShoesStore.Data.DataConstants;
+using static ShoesStore.Data.DataConstants.Shoe;
 
 namespace ShoesStore.Models.Shoes
 {
     public class AddShoeFormModel
     {
         [Required]
-        [StringLength(ShoeBrandMaxLength, MinimumLength = ShoeBrandMinLength)]
+        [StringLength(BrandMaxLength, MinimumLength = BrandMinLength)]
         public string Brand { get; init; }
 
         [Required]
-        [StringLength(ShoeModelMaxLength, MinimumLength = ShoeModelMinLength)]
+        [StringLength(ModelMaxLength, MinimumLength = ModelMinLength)]
         public string Model { get; init; }
 
         [Required]
-        [Range(ShoeSizeMinValue, ShoeSizeMaxValue)]
+        [Range(SizeMinValue, SizeMaxValue)]
         public int Size { get; init; }
 
         [Required]
-        [StringLength(ShoeColorMaxLength, MinimumLength = ShoeColorMinLength)]
+        [StringLength(ColorMaxLength, MinimumLength = ColorMinLength)]
         public string Color { get; init; }
 
         [Required]
-        [StringLength(ShoeMatterMaxLength, MinimumLength = ShoeMatterMinLength)]
+        [StringLength(MatterMaxLength, MinimumLength = MatterMinLength)]
         public string Matter { get; init; }
 
         [Required]
-        [StringLength(ShoeDescriptionMaxLength, MinimumLength = ShoeDescriptionMinLength)]
+        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
         public string Description { get; init; }
 
         [Display(Name = "Image URL")]
