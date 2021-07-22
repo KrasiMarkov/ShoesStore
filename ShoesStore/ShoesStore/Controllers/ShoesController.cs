@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ShoesStore.Data;
+using ShoesStore.Data.Infrastructure;
 using ShoesStore.Data.Models;
 using ShoesStore.Models.Shoes;
 using System;
@@ -16,11 +18,20 @@ namespace ShoesStore.Controllers
         public ShoesController(ShoesStoreDbContext data) 
             => this.data = data;
 
-        public IActionResult Add() => View(new AddShoeFormModel
+        [Authorize]
+        public IActionResult Add()
         {
-            Categories = this.GetShoeCategories()
+            if (!this.UserIsSeller())
+            {
+                return RedirectToAction(nameof(SellersController.Become), "Sellers");
+            }
 
-        });
+            return View(new AddShoeFormModel
+            {
+                Categories = this.GetShoeCategories()
+
+            });
+        }
 
         public IActionResult All([FromQuery] AllShoesQueryModel query)
         {
@@ -78,9 +89,24 @@ namespace ShoesStore.Controllers
             
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Add(AddShoeFormModel shoe)
         {
+            
+
+            var sellerId = this.data
+                               .Sellers
+                               .Where(s => s.UserId == this.User.GetId())
+                               .Select(s => s.Id)
+                               .FirstOrDefault();
+
+
+            if (sellerId == 0)
+            {
+                return RedirectToAction(nameof(SellersController.Become), "SellersController");
+            }
+
 
             if (!this.data.Categories.Any(c => c.Id == shoe.CategoryId))
             {
@@ -113,6 +139,11 @@ namespace ShoesStore.Controllers
             return RedirectToAction(nameof(All));
            
         }
+
+        private bool UserIsSeller()
+            => this.data
+                .Sellers
+                .Any(s => s.UserId == this.User.GetId());
 
         private IEnumerable<ShoeCategoryViewModel> GetShoeCategories()
         

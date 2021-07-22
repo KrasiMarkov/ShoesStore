@@ -30,8 +30,11 @@ namespace ShoesStore.Data
 
         public class Seller 
         {
+            public const int NameMinLength = 2;
             public const int NameMaxLength = 25;
+            public const int PhoneNumberMinLength = 6;
             public const int PhoneNumberMaxLength = 30;
+
 
         }
 
