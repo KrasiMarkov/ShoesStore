@@ -4,6 +4,7 @@ using ShoesStore.Data;
 using ShoesStore.Data.Infrastructure;
 using ShoesStore.Data.Models;
 using ShoesStore.Models.Shoes;
+using ShoesStore.Services.Shoes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,13 @@ namespace ShoesStore.Controllers
     public class ShoesController : Controller
     {
         private readonly ShoesStoreDbContext data;
+        private readonly IShoeService shoes;
 
-        public ShoesController(ShoesStoreDbContext data) 
-            => this.data = data;
+        public ShoesController(ShoesStoreDbContext data, IShoeService shoes)
+        {
+            this.data = data;
+            this.shoes = shoes;
+        }
 
         [Authorize]
         public IActionResult Add()
@@ -35,55 +40,20 @@ namespace ShoesStore.Controllers
 
         public IActionResult All([FromQuery] AllShoesQueryModel query)
         {
-            var shoesQuery = this.data.Shoes.AsQueryable();
+            var queryResult = this.shoes
+                            .All(query.Brand,
+                                 query.SearchTerm,
+                                 query.Sorting,
+                                 query.CurrentPage,
+                                 AllShoesQueryModel.ShoesPerPage);
 
-            if (!string.IsNullOrWhiteSpace(query.Brand))
-            {
-                shoesQuery = shoesQuery.Where(s => s.Brand == query.Brand);
-            }
+            var shoesBrands = this.shoes.AllShoeBrands();
 
-            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-            {
-                shoesQuery = shoesQuery.Where(s => 
-                       (s.Brand + " " + s.Model).ToLower().Contains(query.SearchTerm.ToLower()) ||
-                       s.Description.ToLower().Contains(query.SearchTerm.ToLower()));
-            }
-
-            shoesQuery = query.Sorting switch
-            {
-                ShoesSorting.DateCreated => shoesQuery.OrderByDescending(s => s.Id),
-                ShoesSorting.Size => shoesQuery.OrderByDescending(s => s.Size),
-                ShoesSorting.BrandAndModel => shoesQuery.OrderBy(s => s.Brand).ThenBy(s => s.Model),
-                _ => shoesQuery.OrderByDescending(s => s.Id)
-            };
-
-
-            var shoes = shoesQuery
-                            .Skip((query.CurrentPage - 1) * AllShoesQueryModel.ShoesPerPage)
-                            .Take(AllShoesQueryModel.ShoesPerPage)
-                            .Select(s => new ShoeListingViewModel
-                            {
-                                Id = s.Id,
-                                Brand = s.Brand,
-                                Model = s.Model,
-                                ImageUrl = s.ImageUrl,
-                                Size = s.Size,
-                                Category = s.Category.Name
-                            })
-                            .ToList();
-
-            var shoesBrands = this.data
-                                 .Shoes
-                                 .Select(s => s.Brand)
-                                 .Distinct()
-                                 .OrderBy(br => br)
-                                 .ToList();
-
-            var totalShoes = shoesQuery.Count();
+            
 
             query.Brands = shoesBrands;
-            query.Shoes = shoes;
-            query.TotalShoes = totalShoes;
+            query.TotalShoes = queryResult.TotalShoes;
+            query.Shoes = queryResult.Shoes;
 
             return View(query); 
             

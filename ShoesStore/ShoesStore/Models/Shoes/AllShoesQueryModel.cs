@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoesStore.Services.Shoes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace ShoesStore.Models.Shoes
 
         public int TotalShoes { get; set; }
 
-        public IEnumerable<ShoeListingViewModel> Shoes { get; set; }
+        public IEnumerable<ShoeServiceModel> Shoes { get; set; }
 
     }
 }

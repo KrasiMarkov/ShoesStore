@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShoesStore.Models.Shoes
+namespace ShoesStore.Services.Shoes
 {
-    public class ShoeListingViewModel
+    public class ShoeServiceModel
     {
         public int Id { get; init; }
 
@@ -18,6 +18,7 @@ namespace ShoesStore.Models.Shoes
         public int Size { get; init; }
 
         public string Category { get; init; }
+
 
     }
 }

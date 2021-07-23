@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShoesStore.Data;
 using ShoesStore.Data.Infrastructure;
+using ShoesStore.Services.Shoes;
+using ShoesStore.Services.Statistics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +43,8 @@ namespace ShoesStore
                 .AddEntityFrameworkStores<ShoesStoreDbContext>();
 
             services.AddControllersWithViews();
+            services.AddTransient<IStatisticsService, StatisticsService>();
+            services.AddTransient<IShoeService, ShoeService>();
         }
 
 
