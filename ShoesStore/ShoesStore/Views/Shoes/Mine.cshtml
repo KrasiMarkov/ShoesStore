@@ -1,0 +1,12 @@
+﻿@model IEnumerable<ShoeServiceModel>
+
+@{
+    ViewData["Title"] = "My Shoes";
+}
+
+@if (!Model.Any())
+{
+    <h2 class="text-center">You do not have any shoes yet!</h2>
+}
+
+<partial name="_ShoesPartial" model="@Model"/> 

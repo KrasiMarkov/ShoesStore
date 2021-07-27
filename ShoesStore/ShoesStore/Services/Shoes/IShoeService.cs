@@ -16,5 +16,7 @@ namespace ShoesStore.Services.Shoes
 
         IEnumerable<string> AllShoeBrands();
 
+        IEnumerable<ShoeServiceModel> ByUsers(string userId);
+
     }
 }

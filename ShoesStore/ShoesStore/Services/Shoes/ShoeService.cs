@@ -1,4 +1,5 @@
 ﻿using ShoesStore.Data;
+using ShoesStore.Data.Models;
 using ShoesStore.Models.Shoes;
 using System;
 using System.Collections.Generic;
@@ -45,19 +46,10 @@ namespace ShoesStore.Services.Shoes
 
             var totalShoes = shoesQuery.Count();
 
-            var shoes = shoesQuery
+            var shoes = GetCars(shoesQuery
                             .Skip((currentPage - 1) * shoesPerPage)
-                            .Take(shoesPerPage)
-                            .Select(s => new ShoeServiceModel
-                            {
-                                Id = s.Id,
-                                Brand = s.Brand,
-                                Model = s.Model,
-                                ImageUrl = s.ImageUrl,
-                                Size = s.Size,
-                                Category = s.Category.Name
-                            })
-                            .ToList();
+                            .Take(shoesPerPage));
+                            
 
 
             return new ShoeQueryServiceModel
@@ -77,5 +69,26 @@ namespace ShoesStore.Services.Shoes
                           .Distinct()
                           .OrderBy(br => br)
                           .ToList();
+
+        public IEnumerable<ShoeServiceModel> ByUsers(string userId)
+        => this.GetCars(this.data.Shoes.Where(s => s.Seller.UserId == userId));
+            
+            
+        
+
+        private IEnumerable<ShoeServiceModel> GetCars(IQueryable<Shoe> shoeQuery)
+        => shoeQuery
+                   .Select(s => new ShoeServiceModel
+                   {
+                           Id = s.Id,
+                           Brand = s.Brand,
+                           Model = s.Model,
+                           ImageUrl = s.ImageUrl,
+                           Size = s.Size,
+                           Category = s.Category.Name
+                   })
+                    .ToList();
+
+
     }
 }

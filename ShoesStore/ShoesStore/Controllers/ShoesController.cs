@@ -110,6 +110,13 @@ namespace ShoesStore.Controllers
            
         }
 
+        public IActionResult Mine()
+        {
+            var myShoes = this.shoes.ByUsers(this.User.GetId());
+
+            return View(myShoes);
+        }
+
         private bool UserIsSeller()
             => this.data
                 .Sellers

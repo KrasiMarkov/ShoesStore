@@ -15,6 +15,11 @@ namespace ShoesStore.Controllers
     {
         private readonly ShoesStoreDbContext data;
 
+        public SellersController(ShoesStoreDbContext data)
+        {
+            this.data = data;
+        }
+
         [Authorize]
         public IActionResult Become() 
             => View();
