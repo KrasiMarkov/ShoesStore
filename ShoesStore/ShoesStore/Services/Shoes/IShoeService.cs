@@ -14,9 +14,41 @@ namespace ShoesStore.Services.Shoes
             int currentPage,
             int shoesPerPage);
 
-        IEnumerable<string> AllShoeBrands();
+        ShoeDetailsServiceModel Details(int shoeId);
+
+        int Create(
+                string brand,
+                string model,
+                int size,
+                string color,
+                string matter,
+                string description,
+                string imageUrl,
+                int categoryId,
+                int sellerId);
+
+        bool Edit(
+               int shoeId,
+               string brand,
+               string model,
+               int size,
+               string color,
+               string matter,
+               string description,
+               string imageUrl,
+               int categoryId);
+
+        bool IsBySeller(int shoeId, int sellerId);
+
+        IEnumerable<string> AllBrands();
 
         IEnumerable<ShoeServiceModel> ByUsers(string userId);
+
+        IEnumerable<ShoeCategoryServiceModel> AllCategories();
+
+        bool CategoryExists(int categoryId);
+
+
 
     }
 }

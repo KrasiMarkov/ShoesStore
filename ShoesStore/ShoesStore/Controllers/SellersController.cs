@@ -30,7 +30,7 @@ namespace ShoesStore.Controllers
         [HttpPost]
         public IActionResult Become(BecomeSellerFormModel seller)
         {
-            var userId = this.User.GetId();
+            var userId = this.User.Id();
 
 
             var userIsAlreadySeller = this.data
@@ -54,7 +54,7 @@ namespace ShoesStore.Controllers
                 UserId = userId
             };
 
-            this.data.Add(sellerData);
+            this.data.Sellers.Add(sellerData);
             this.data.SaveChanges();
 
             return RedirectToAction("All", "Shoes");

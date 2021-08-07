@@ -46,7 +46,7 @@ namespace ShoesStore.Services.Shoes
 
             var totalShoes = shoesQuery.Count();
 
-            var shoes = GetCars(shoesQuery
+            var shoes = GetShoes(shoesQuery
                             .Skip((currentPage - 1) * shoesPerPage)
                             .Take(shoesPerPage));
                             
@@ -62,7 +62,7 @@ namespace ShoesStore.Services.Shoes
             };
         }
 
-        public IEnumerable<string> AllShoeBrands() 
+        public IEnumerable<string> AllBrands() 
                    => this.data
                           .Shoes
                           .Select(s => s.Brand)
@@ -70,22 +70,113 @@ namespace ShoesStore.Services.Shoes
                           .OrderBy(br => br)
                           .ToList();
 
+        public IEnumerable<ShoeCategoryServiceModel> AllCategories()
+        
+           => this.data
+                .Categories
+                .Select(s => new ShoeCategoryServiceModel
+                {
+                    Id = s.Id,
+                    Name = s.Name
+
+                })
+                .ToList();
+        
+
         public IEnumerable<ShoeServiceModel> ByUsers(string userId)
-        => this.GetCars(this.data.Shoes.Where(s => s.Seller.UserId == userId));
-            
+        => this.GetShoes(this.data.Shoes.Where(s => s.Seller.UserId == userId));
+
+        public bool CategoryExists(int categoryId)
+        => this.data
+               .Categories
+               .Any(c => c.Id == categoryId);
+
+        public int Create( string brand, string model, int size, string color, string matter, string description, string imageUrl, int categoryId, int sellerId)
+        {
+
+            var shoeData = new Shoe
+            {
+                Brand = brand,
+                Model = model,
+                Size = size,
+                Color = color,
+                Matter = matter,
+                Description = description,
+                ImageUrl = imageUrl,
+                CategoryId = categoryId,
+                SellerId = sellerId
+            };
+
+            this.data.Shoes.Add(shoeData);
+
+            this.data.SaveChanges();
+
+            return shoeData.Id;
+
+        }
+
+        public ShoeDetailsServiceModel Details(int id)
+        => this.data
+            .Shoes
+            .Where(s => s.Id == id)
+            .Select(s => new ShoeDetailsServiceModel
+            {
+
+                Id = s.Id,
+                Brand = s.Brand,
+                Model = s.Model,
+                Description = s.Description,
+                ImageUrl = s.ImageUrl,
+                Size = s.Size,
+                SellerId = s.SellerId,
+                SellerName = s.Seller.Name,
+                UserId = s.Seller.UserId
+            })
+            .FirstOrDefault();
+
+        public bool Edit(int id, string brand, string model, int size, string color, string matter, string description, string imageUrl, int categoryId)
+        {
+            var shoeData = this.data.Shoes.Find(id);
+
+            if (shoeData == null)
+            {
+                return false;
+            }
+           
+            shoeData.Brand = brand;
+            shoeData.Model = model;
+            shoeData.Size = size;
+            shoeData.Color = color;
+            shoeData.Matter = matter;
+            shoeData.Description = description;
+            shoeData.ImageUrl = imageUrl;
+            shoeData.CategoryId = categoryId;
+
+            this.data.SaveChanges();
+
+            return true;
+        }
+
+        public bool IsBySeller(int shoeId, int sellerId)
+        => this.data
+               .Shoes
+               .Any(s => s.Id == shoeId && s.SellerId == sellerId);
             
         
 
-        private IEnumerable<ShoeServiceModel> GetCars(IQueryable<Shoe> shoeQuery)
+        private IEnumerable<ShoeServiceModel> GetShoes(IQueryable<Shoe> shoeQuery)
         => shoeQuery
                    .Select(s => new ShoeServiceModel
                    {
                            Id = s.Id,
                            Brand = s.Brand,
                            Model = s.Model,
-                           ImageUrl = s.ImageUrl,
                            Size = s.Size,
-                           Category = s.Category.Name
+                           Color = s.Color,
+                           Matter = s.Matter,
+                           ImageUrl = s.ImageUrl
+                         
+                           
                    })
                     .ToList();
 

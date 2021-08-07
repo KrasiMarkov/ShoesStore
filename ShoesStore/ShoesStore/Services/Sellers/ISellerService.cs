@@ -9,6 +9,6 @@ namespace ShoesStore.Services.Sellers
     {
         public bool IsSeller(string userId);
 
-
+        public int IdByUser(string userId);
     }
 }

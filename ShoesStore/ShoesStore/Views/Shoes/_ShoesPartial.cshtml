@@ -5,10 +5,15 @@
     {
         <div class="col-md-3">
             <div class="card mb-3">
-                <img class="card-img-top" src="@shoe.ImageUrl" alt="@shoe.Brand @shoe.Model @shoe.Size (@shoe.Category)">
+                <img class="card-img-top" src="@shoe.ImageUrl" alt="@shoe.Brand @shoe.Model @shoe.Size">
                 <div class="card-body text-center">
                     <h5 class="card-title text-center">@shoe.Brand @shoe.Model (@shoe.Size)</h5>
-                    <a asp-controller="Shoes" asp-action="Details" asp-route-id="@shoe.Id" class="btn btn-primary">View More</a>
+                    <a asp-controller="Shoes" asp-action="Details" asp-route-id="@shoe.Id" class="btn btn-primary">View</a>
+                    @if (ViewBag.AllowShoeEdit == true)
+                    {
+                        <a asp-controller="Shoes" asp-action="Edit" asp-route-id="@shoe.Id" class="btn btn-warning">Edit</a>
+                        <a asp-controller="Shoes" asp-action="Delete" asp-route-id="@shoe.Id" class="btn btn-danger">Delete</a>
+                    }
                 </div>
             </div>
         </div>

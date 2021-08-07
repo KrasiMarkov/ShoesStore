@@ -8,11 +8,11 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
 
-     {
-         
-            var userId = User.GetId();
-            var userIsSeller = Sellers.IsSeller(userId);
-        
+    {
+
+        var userId = User.Id();
+        var userIsSeller = Sellers.IsSeller(userId);
+
 
 
         @if (userIsSeller)

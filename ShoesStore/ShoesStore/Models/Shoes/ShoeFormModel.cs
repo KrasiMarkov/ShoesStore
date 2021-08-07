@@ -7,7 +7,7 @@ using static ShoesStore.Data.DataConstants.Shoe;
 
 namespace ShoesStore.Models.Shoes
 {
-    public class AddShoeFormModel
+    public class ShoeFormModel
     {
         [Required]
         [StringLength(BrandMaxLength, MinimumLength = BrandMinLength)]
@@ -41,7 +41,7 @@ namespace ShoesStore.Models.Shoes
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
 
-        public IEnumerable<ShoeCategoryViewModel> Categories { get; set; }
+        public IEnumerable<ShoeCategoryServiceModel> Categories { get; set; }
 
        
 

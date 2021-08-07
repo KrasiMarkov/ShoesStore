@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<ShoeServiceModel>
 
 @{
-    ViewData["Title"] = "My Shoes";
+    ViewBag.Title = "My Shoes";
+    ViewBag.AllowShoeEdit = true;
 }
 
 @if (!Model.Any())

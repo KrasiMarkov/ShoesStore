@@ -22,5 +22,14 @@ namespace ShoesStore.Services.Sellers
                        .Any(s => s.UserId == userId);
                        
         }
+
+        public int IdByUser(string userId)
+        
+           => this.data
+                        .Sellers
+                        .Where(s => s.UserId == userId)
+                        .Select(s => s.Id)
+                        .FirstOrDefault();        
+        
     }
 }
