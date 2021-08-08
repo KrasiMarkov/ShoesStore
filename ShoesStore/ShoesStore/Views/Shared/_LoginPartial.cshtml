@@ -1,8 +1,9 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity;
+@using ShoesStore.Data.Models;
 @using ShoesStore.Data.Infrastructure; 
 @using ShoesStore.Services.Sellers; 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 @inject ISellerService  Sellers 
 
 <ul class="navbar-nav">

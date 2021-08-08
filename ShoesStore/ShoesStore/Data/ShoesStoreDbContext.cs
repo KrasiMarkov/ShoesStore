@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ShoesStore.Data
 {
-    public class ShoesStoreDbContext : IdentityDbContext
+    public class ShoesStoreDbContext : IdentityDbContext<User>
     { 
 
         public ShoesStoreDbContext(DbContextOptions<ShoesStoreDbContext> options)
@@ -42,7 +42,7 @@ namespace ShoesStore.Data
 
 
             builder.Entity<Seller>()
-                 .HasOne<IdentityUser>()
+                 .HasOne<User>()
                  .WithOne()
                  .HasForeignKey<Seller>(s => s.UserId)
                  .OnDelete(DeleteBehavior.Restrict);

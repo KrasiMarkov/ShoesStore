@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShoesStore.Data;
 using ShoesStore.Data.Infrastructure;
+using ShoesStore.Data.Models;
 using ShoesStore.Services.Sellers;
 using ShoesStore.Services.Shoes;
 using ShoesStore.Services.Statistics;
@@ -34,13 +35,14 @@ namespace ShoesStore
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services
-                .AddDefaultIdentity<IdentityUser>(options =>
+                .AddDefaultIdentity<User>(options =>
                 {
                     options.Password.RequireDigit = false;
                     options.Password.RequireLowercase = false;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ShoesStoreDbContext>();
 
             services.AddControllersWithViews();
