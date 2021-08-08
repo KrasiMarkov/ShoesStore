@@ -2,6 +2,7 @@
 @using ShoesStore.Data.Models;
 @using ShoesStore.Data.Infrastructure; 
 @using ShoesStore.Services.Sellers; 
+@using static ShoesStore.WebConstants; 
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 @inject ISellerService  Sellers 
@@ -13,17 +14,17 @@
 
         var userId = User.Id();
         var userIsSeller = Sellers.IsSeller(userId);
+        var userIsAdmin = User.IsAdmin();
 
 
-
-        @if (userIsSeller)
+        @if (userIsSeller && !userIsAdmin)
          {
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Shoes" asp-action="Mine">My Shoes</a>
             </li>
          }
 
-        else
+        else if(!userIsAdmin)
         {
              <li class="nav-item">
                  <a class="nav-link text-dark" asp-area="" asp-controller="Sellers" asp-action="Become">Become Seller</a>

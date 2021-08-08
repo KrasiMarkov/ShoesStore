@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,10 +11,8 @@ using ShoesStore.Data.Models;
 using ShoesStore.Services.Sellers;
 using ShoesStore.Services.Shoes;
 using ShoesStore.Services.Statistics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace ShoesStore
 {
@@ -30,7 +26,7 @@ namespace ShoesStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ShoesStoreDbContext>(options => options
-            .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            .UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -45,7 +41,10 @@ namespace ShoesStore
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ShoesStoreDbContext>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options => 
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
             services.AddTransient<IStatisticsService, StatisticsService>();
             services.AddTransient<ISellerService, SellerService>();
             services.AddTransient<IShoeService, ShoeService>();

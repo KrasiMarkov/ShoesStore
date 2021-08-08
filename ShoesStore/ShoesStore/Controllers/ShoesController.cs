@@ -119,14 +119,14 @@ namespace ShoesStore.Controllers
         {
             var userId = this.User.Id();
 
-            if (!this.sellers.IsSeller(userId))
+            if (!this.sellers.IsSeller(userId) && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(SellersController.Become), "Sellers");
             }
 
             var shoe = this.shoes.Details(id);
 
-            if (shoe.UserId != userId)
+            if (shoe.UserId != userId && !User.IsAdmin())
             {
                 return Unauthorized();
             }
@@ -155,7 +155,7 @@ namespace ShoesStore.Controllers
             var sellerId = this.sellers.IdByUser(this.User.Id());
 
 
-            if (sellerId == 0)
+            if (sellerId == 0 && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(SellersController.Become), "SellersController");
             }
@@ -174,7 +174,7 @@ namespace ShoesStore.Controllers
             }
 
 
-            if (!this.shoes.IsBySeller(id, sellerId))
+            if (!this.shoes.IsBySeller(id, sellerId) && !User.IsAdmin())
             {
                 return BadRequest();
             }
