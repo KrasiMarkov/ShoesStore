@@ -1,6 +1,6 @@
 ﻿@model BecomeSellerFormModel
 
-@{ 
+@{
     ViewBag.Title = "Become Seller";
 }
 
@@ -21,10 +21,14 @@
                     <input asp-for="PhoneNumber" class="form-control" placeholder="+359-777-777-777">
                     <span asp-validation-for="PhoneNumber" class="small text-danger"></span>
                 </div>
-              
+
                 <input class="btn btn-primary" type="submit" value="Save" />
             </form>
         </div>
     </div>
 
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

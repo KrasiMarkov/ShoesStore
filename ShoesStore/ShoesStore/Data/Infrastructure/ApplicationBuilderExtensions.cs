@@ -6,7 +6,8 @@ using ShoesStore.Data.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using static ShoesStore.WebConstants;
+
+using static ShoesStore.Areas.Admin.AdminConstants;
 
 namespace ShoesStore.Data.Infrastructure
 {

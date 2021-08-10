@@ -1,6 +1,6 @@
 ﻿
 using System.Security.Claims;
-using static ShoesStore.WebConstants;
+using static ShoesStore.Areas.Admin.AdminConstants;
 
 namespace ShoesStore.Data.Infrastructure
 {
