@@ -1,4 +1,6 @@
-﻿using ShoesStore.Data;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using ShoesStore.Data;
 using ShoesStore.Data.Models;
 using ShoesStore.Models.Shoes;
 using System;
@@ -11,9 +13,13 @@ namespace ShoesStore.Services.Shoes
     public class ShoeService : IShoeService
     {
         private readonly ShoesStoreDbContext data;
+        private readonly IMapper mapper;
 
-        public ShoeService(ShoesStoreDbContext data) 
-            => this.data = data;
+        public ShoeService(ShoesStoreDbContext data, IMapper mapper)
+        {
+            this.data = data;
+            this.mapper = mapper;
+        }
 
         public ShoeQueryServiceModel All(string brand, 
             string searchTerm, 
@@ -119,19 +125,7 @@ namespace ShoesStore.Services.Shoes
         => this.data
             .Shoes
             .Where(s => s.Id == id)
-            .Select(s => new ShoeDetailsServiceModel
-            {
-
-                Id = s.Id,
-                Brand = s.Brand,
-                Model = s.Model,
-                Description = s.Description,
-                ImageUrl = s.ImageUrl,
-                Size = s.Size,
-                SellerId = s.SellerId,
-                SellerName = s.Seller.Name,
-                UserId = s.Seller.UserId
-            })
+            .ProjectTo<ShoeDetailsServiceModel>(this.mapper.ConfigurationProvider)
             .FirstOrDefault();
 
         public bool Edit(int id, string brand, string model, int size, string color, string matter, string description, string imageUrl, int categoryId)

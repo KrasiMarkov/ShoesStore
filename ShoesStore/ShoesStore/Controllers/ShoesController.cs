@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShoesStore.Data;
 using ShoesStore.Data.Infrastructure;
@@ -18,11 +19,13 @@ namespace ShoesStore.Controllers
         
         private readonly ISellerService sellers;
         private readonly IShoeService shoes;
+        private readonly IMapper mapper;
 
-        public ShoesController(IShoeService shoes, ISellerService sellers)
+        public ShoesController(IShoeService shoes, ISellerService sellers, IMapper mapper)
         {
             this.shoes = shoes;
             this.sellers = sellers;
+            this.mapper = mapper;
         }
 
         [Authorize]
@@ -132,19 +135,12 @@ namespace ShoesStore.Controllers
             }
 
 
-            return View(new ShoeFormModel
-            {
-                Brand = shoe.Brand,
-                Model = shoe.Model,
-                Size = shoe.Size,
-                Color = shoe.Color,
-                Matter = shoe.Matter,
-                Description = shoe.Description,
-                ImageUrl = shoe.ImageUrl,
-                CategoryId = shoe.CategoryId,
-                Categories = this.shoes.AllCategories()
+            var shoeForm = this.mapper.Map<ShoeFormModel>(shoe);
 
-            });
+            shoeForm.Categories = this.shoes.AllCategories();
+
+            return View(shoeForm);
+            
 
         }
 

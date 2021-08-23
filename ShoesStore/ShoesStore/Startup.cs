@@ -41,6 +41,9 @@ namespace ShoesStore
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ShoesStoreDbContext>();
 
+
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddControllersWithViews(options => 
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
