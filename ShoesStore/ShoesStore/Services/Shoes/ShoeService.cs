@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using ShoesStore.Data;
 using ShoesStore.Data.Models;
 using ShoesStore.Models.Shoes;
+using ShoesStore.Services.Shoes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -155,8 +156,16 @@ namespace ShoesStore.Services.Shoes
         => this.data
                .Shoes
                .Any(s => s.Id == shoeId && s.SellerId == sellerId);
-            
-        
+
+
+        public IEnumerable<LatestShoeServiceModel> Latest()
+        => this.data
+                     .Shoes
+                     .OrderByDescending(s => s.Id)
+                     .ProjectTo<LatestShoeServiceModel>(this.mapper.ConfigurationProvider)
+                     .Take(3)
+                     .ToList();
+
 
         private IEnumerable<ShoeServiceModel> GetShoes(IQueryable<Shoe> shoeQuery)
         => shoeQuery

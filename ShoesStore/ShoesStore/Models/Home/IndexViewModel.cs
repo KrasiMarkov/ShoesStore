@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoesStore.Services.Shoes.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace ShoesStore.Models.Home
 
         public int TotalSales { get; init; }
 
-        public List<ShoeIndexViewModel> Shoes { get; init; }
+        public IList<LatestShoeServiceModel> Shoes { get; init; }
 
     }
 }

@@ -6,6 +6,7 @@ using ShoesStore.Data;
 using ShoesStore.Models;
 using ShoesStore.Models.Home;
 using ShoesStore.Models.Shoes;
+using ShoesStore.Services.Shoes;
 using ShoesStore.Services.Statistics;
 using System;
 using System.Collections.Generic;
@@ -18,25 +19,18 @@ namespace ShoesStore.Controllers
     public class HomeController : Controller
     {
         private readonly IStatisticsService statistics;
-        private readonly IMapper mapper;
-        private readonly ShoesStoreDbContext data;
+        private readonly IShoeService shoes;
 
-        public HomeController(IStatisticsService statistics, ShoesStoreDbContext data, IMapper mapper)
+        public HomeController(IStatisticsService statistics, IShoeService shoes)
         {
             this.statistics = statistics;
-            this.data = data;
-            this.mapper = mapper;
+            this.shoes = shoes;
         }
 
         public IActionResult Index()
         {
-          
-            var shoes = this.data
-                          .Shoes
-                          .OrderByDescending(s => s.Id)
-                          .ProjectTo<ShoeIndexViewModel>(this.mapper.ConfigurationProvider)
-                          .Take(8)
-                          .ToList();
+
+            var latestShoes = this.shoes.Latest().ToList();
 
 
             var totalStatistics = this.statistics.Total();
@@ -44,10 +38,10 @@ namespace ShoesStore.Controllers
 
             return View(new IndexViewModel
             {
-                
+
                 TotalShoes = totalStatistics.TotalShoes,
                 TotalUsers = totalStatistics.TotalUsers,
-                Shoes = shoes
+                Shoes = latestShoes
 
             });
             
@@ -56,7 +50,7 @@ namespace ShoesStore.Controllers
             
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+      
+        public IActionResult Error() => View();
     }
 }

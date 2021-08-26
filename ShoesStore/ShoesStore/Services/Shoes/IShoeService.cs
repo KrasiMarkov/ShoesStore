@@ -1,4 +1,5 @@
 ﻿using ShoesStore.Models.Shoes;
+using ShoesStore.Services.Shoes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace ShoesStore.Services.Shoes
             ShoesSorting sorting,
             int currentPage,
             int shoesPerPage);
+
+        IEnumerable<LatestShoeServiceModel> Latest();
 
         ShoeDetailsServiceModel Details(int shoeId);
 

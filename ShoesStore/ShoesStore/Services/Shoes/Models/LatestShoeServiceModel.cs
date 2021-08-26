@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShoesStore.Models.Home
+namespace ShoesStore.Services.Shoes.Models
 {
-    public class ShoeIndexViewModel
+    public class LatestShoeServiceModel
     {
         public int Id { get; init; }
 
