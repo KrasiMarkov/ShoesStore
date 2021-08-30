@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ShoesStore.Data.Models;
-using ShoesStore.Models.Home;
+
 using ShoesStore.Models.Shoes;
 using ShoesStore.Services.Shoes;
 using ShoesStore.Services.Shoes.Models;

@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using ShoesStore.Data;
 using ShoesStore.Models;
-using ShoesStore.Models.Home;
+
 using ShoesStore.Models.Shoes;
 using ShoesStore.Services.Shoes;
+using ShoesStore.Services.Shoes.Models;
 using ShoesStore.Services.Statistics;
 using System;
 using System.Collections.Generic;
@@ -18,35 +20,35 @@ namespace ShoesStore.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IStatisticsService statistics;
+       
         private readonly IShoeService shoes;
+        private readonly IMemoryCache cache;
 
-        public HomeController(IStatisticsService statistics, IShoeService shoes)
+        public HomeController(IShoeService shoes, IMemoryCache cache)
         {
-            this.statistics = statistics;
             this.shoes = shoes;
+            this.cache = cache;
         }
 
         public IActionResult Index()
         {
 
-            var latestShoes = this.shoes.Latest().ToList();
+            const string latestShoesCacheKey = "LatestShoesCasheKey";
 
+            var latestShoes = this.cache.Get<List<LatestShoeServiceModel>>(latestShoesCacheKey);
 
-            var totalStatistics = this.statistics.Total();
-
-
-            return View(new IndexViewModel
+            if (latestShoes == null)
             {
+                 latestShoes = this.shoes.Latest().ToList();
 
-                TotalShoes = totalStatistics.TotalShoes,
-                TotalUsers = totalStatistics.TotalUsers,
-                Shoes = latestShoes
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
 
-            });
-            
+                this.cache.Set(latestShoesCacheKey, latestShoes, cacheOptions);
 
+            }
 
+            return View(latestShoes);
             
         }
 

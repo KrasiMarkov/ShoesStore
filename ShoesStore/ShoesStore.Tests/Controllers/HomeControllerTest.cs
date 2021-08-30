@@ -8,7 +8,7 @@ using ShoesStore.Services.Shoes;
 using ShoesStore.Tests.Mock;
 using System.Collections.Generic;
 using ShoesStore.Services.Statistics;
-using ShoesStore.Models.Home;
+
 using System.Linq;
 using ShoesStore.Data.Models;
 using MyTested.AspNetCore.Mvc;
@@ -54,7 +54,7 @@ namespace ShoesStore.Tests.Controller
             var shoeService = new ShoeService(data, mapper);
             var statisticsService = new StatisticsService(data);
 
-            var homeController = new HomeController(statisticsService, shoeService);
+            var homeController = new HomeController(shoeService);
 
             //Act
 
