@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ShoesStore.Services.Shoes.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ShoesStore.Services.Shoes
 {
-    public class ShoeServiceModel
+    public class ShoeServiceModel : IShoeModel
     {
         public int Id { get; init; }
 
@@ -23,6 +24,8 @@ namespace ShoesStore.Services.Shoes
 
         public string CategoryName { get; init; }
 
+
+        public bool IsPublic { get; init; }
 
     }
 }

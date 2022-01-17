@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ShoesStore.Services.Shoes.Models
 {
-    public class LatestShoeServiceModel
+    public class LatestShoeServiceModel : IShoeModel
     {
         public int Id { get; init; }
 

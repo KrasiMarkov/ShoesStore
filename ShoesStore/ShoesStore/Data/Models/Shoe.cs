@@ -37,8 +37,9 @@ namespace ShoesStore.Data.Models
         [Required]
         public string  ImageUrl { get; set; }
 
-
         public int CategoryId { get; set; }
+
+        public bool IsPublic { get; set; }
 
         public Category Category { get; set; }
 

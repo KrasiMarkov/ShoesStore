@@ -37,6 +37,8 @@ namespace ShoesStore.Controllers
 
             var latestShoes = this.cache.Get<List<LatestShoeServiceModel>>(latestShoesCacheKey);
 
+            
+
             if (latestShoes == null)
             {
                  latestShoes = this.shoes.Latest().ToList();

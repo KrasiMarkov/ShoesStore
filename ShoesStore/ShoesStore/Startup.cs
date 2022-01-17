@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShoesStore.Data;
-using ShoesStore.Data.Infrastructure;
+using ShoesStore.Data.Infrastructure.Extensions;
 using ShoesStore.Data.Models;
 using ShoesStore.Services.Sellers;
 using ShoesStore.Services.Shoes;
@@ -82,6 +82,11 @@ namespace ShoesStore
                    endpoints.MapControllerRoute(
                        name: "Areas",
                        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                   endpoints.MapControllerRoute(
+                       name: "Shoe Details",
+                       pattern: "/Shoes/Details/{id}/{information}",
+                       defaults:  new { controller = "Shoes", action = "Details"}); 
 
                    endpoints.MapDefaultControllerRoute();
                    endpoints.MapRazorPages();

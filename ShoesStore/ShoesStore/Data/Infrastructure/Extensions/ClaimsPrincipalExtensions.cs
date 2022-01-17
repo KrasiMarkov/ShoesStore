@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using static ShoesStore.Areas.Admin.AdminConstants;
 
-namespace ShoesStore.Data.Infrastructure
+namespace ShoesStore.Data.Infrastructure.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {

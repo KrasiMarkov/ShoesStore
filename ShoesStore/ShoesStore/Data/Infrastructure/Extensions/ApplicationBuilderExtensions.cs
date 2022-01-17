@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 using static ShoesStore.Areas.Admin.AdminConstants;
 
-namespace ShoesStore.Data.Infrastructure
+namespace ShoesStore.Data.Infrastructure.Extensions
 {
     public static class ApplicationBuilderExtensions
     {

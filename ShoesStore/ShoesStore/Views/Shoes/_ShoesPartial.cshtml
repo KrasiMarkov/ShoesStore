@@ -8,7 +8,7 @@
                 <img class="card-img-top" src="@shoe.ImageUrl" alt="@shoe.Brand @shoe.Model @shoe.Size">
                 <div class="card-body text-center">
                     <h5 class="card-title text-center">@shoe.Brand @shoe.Model (@shoe.Size)</h5>
-                    <a asp-controller="Shoes" asp-action="Details" asp-route-id="@shoe.Id" class="btn btn-primary">View</a>
+                    <a asp-controller="Shoes" asp-action="Details" asp-route-id="@shoe.Id" asp-route-information="@shoe.GetInformation()" class="btn btn-primary">View</a>
                     @if (ViewBag.AllowShoeEdit == true || User.IsAdmin())
                     {
                         <a asp-controller="Shoes" asp-action="Edit" asp-route-id="@shoe.Id" class="btn btn-warning">Edit</a>

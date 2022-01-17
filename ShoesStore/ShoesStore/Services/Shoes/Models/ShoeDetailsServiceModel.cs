@@ -15,6 +15,7 @@ namespace ShoesStore.Services.Shoes
 
         public int CategoryId { get; set; }
 
+
         public string UserId { get; set; }
 
 

@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShoesStore.Data;
-using ShoesStore.Data.Infrastructure;
+using ShoesStore.Data.Infrastructure.Extensions;
 using ShoesStore.Data.Models;
 using ShoesStore.Models.Sellers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static ShoesStore.WebConstants;
 
 namespace ShoesStore.Controllers
 {
@@ -56,6 +57,8 @@ namespace ShoesStore.Controllers
 
             this.data.Sellers.Add(sellerData);
             this.data.SaveChanges();
+
+            this.TempData[GlobalMessageKey] = "Thank you from becoming seller!";
 
             return RedirectToAction("All", "Shoes");
 

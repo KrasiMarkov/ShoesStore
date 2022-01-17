@@ -22,13 +22,15 @@ namespace ShoesStore.Services.Shoes
             this.mapper = mapper;
         }
 
-        public ShoeQueryServiceModel All(string brand, 
-            string searchTerm, 
-            ShoesSorting sorting, 
-            int currentPage,
-            int shoesPerPage)
+        public ShoeQueryServiceModel All(
+            string brand = null, 
+            string searchTerm = null, 
+            ShoesSorting sorting = ShoesSorting.DateCreated, 
+            int currentPage = 1,
+            int shoesPerPage = int.MaxValue,
+            bool publicOnly = true)
         {
-            var shoesQuery = this.data.Shoes.AsQueryable();
+            var shoesQuery = this.data.Shoes.Where(s => !publicOnly || s.IsPublic);
 
             if (!string.IsNullOrWhiteSpace(brand))
             {
@@ -81,12 +83,7 @@ namespace ShoesStore.Services.Shoes
         
            => this.data
                 .Categories
-                .Select(s => new ShoeCategoryServiceModel
-                {
-                    Id = s.Id,
-                    Name = s.Name
-
-                })
+                .ProjectTo<ShoeCategoryServiceModel>(this.mapper.ConfigurationProvider)
                 .ToList();
         
 
@@ -97,6 +94,15 @@ namespace ShoesStore.Services.Shoes
         => this.data
                .Categories
                .Any(c => c.Id == categoryId);
+
+        public void ChangeVisibility(int shoeId)
+        {
+            var shoe = this.data.Shoes.Find(shoeId);
+
+            shoe.IsPublic = !shoe.IsPublic;
+
+            this.data.SaveChanges();
+        }
 
         public int Create( string brand, string model, int size, string color, string matter, string description, string imageUrl, int categoryId, int sellerId)
         {
@@ -111,7 +117,8 @@ namespace ShoesStore.Services.Shoes
                 Description = description,
                 ImageUrl = imageUrl,
                 CategoryId = categoryId,
-                SellerId = sellerId
+                SellerId = sellerId,
+                IsPublic = false
             };
 
             this.data.Shoes.Add(shoeData);
@@ -129,7 +136,7 @@ namespace ShoesStore.Services.Shoes
             .ProjectTo<ShoeDetailsServiceModel>(this.mapper.ConfigurationProvider)
             .FirstOrDefault();
 
-        public bool Edit(int id, string brand, string model, int size, string color, string matter, string description, string imageUrl, int categoryId)
+        public bool Edit(int id, string brand, string model, int size, string color, string matter, string description, string imageUrl, int categoryId, bool isPublic)
         {
             var shoeData = this.data.Shoes.Find(id);
 
@@ -146,6 +153,7 @@ namespace ShoesStore.Services.Shoes
             shoeData.Description = description;
             shoeData.ImageUrl = imageUrl;
             shoeData.CategoryId = categoryId;
+            shoeData.IsPublic = isPublic;
 
             this.data.SaveChanges();
 
@@ -161,6 +169,7 @@ namespace ShoesStore.Services.Shoes
         public IEnumerable<LatestShoeServiceModel> Latest()
         => this.data
                      .Shoes
+                     .Where(s => s.IsPublic)
                      .OrderByDescending(s => s.Id)
                      .ProjectTo<LatestShoeServiceModel>(this.mapper.ConfigurationProvider)
                      .Take(3)
@@ -169,18 +178,7 @@ namespace ShoesStore.Services.Shoes
 
         private IEnumerable<ShoeServiceModel> GetShoes(IQueryable<Shoe> shoeQuery)
         => shoeQuery
-                   .Select(s => new ShoeServiceModel
-                   {
-                           Id = s.Id,
-                           Brand = s.Brand,
-                           Model = s.Model,
-                           Size = s.Size,
-                           Color = s.Color,
-                           Matter = s.Matter,
-                           ImageUrl = s.ImageUrl
-                         
-                           
-                   })
+                   .ProjectTo<ShoeServiceModel>(this.mapper.ConfigurationProvider)
                     .ToList();
 
 

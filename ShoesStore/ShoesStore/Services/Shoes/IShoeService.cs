@@ -9,11 +9,13 @@ namespace ShoesStore.Services.Shoes
 {
     public interface IShoeService
     {
-        ShoeQueryServiceModel All(string brand,
-            string searchTerm,
-            ShoesSorting sorting,
-            int currentPage,
-            int shoesPerPage);
+        ShoeQueryServiceModel All(
+            string brand = null,
+            string searchTerm = null,
+            ShoesSorting sorting = ShoesSorting.DateCreated,
+            int currentPage = 1,
+            int shoesPerPage = int.MaxValue,
+            bool publicOnly = true);
 
         IEnumerable<LatestShoeServiceModel> Latest();
 
@@ -39,9 +41,12 @@ namespace ShoesStore.Services.Shoes
                string matter,
                string description,
                string imageUrl,
-               int categoryId);
+               int categoryId,
+               bool isPublic);
 
         bool IsBySeller(int shoeId, int sellerId);
+
+        void ChangeVisibility(int shoeId);
 
         IEnumerable<string> AllBrands();
 

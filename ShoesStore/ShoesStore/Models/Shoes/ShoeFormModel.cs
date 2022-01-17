@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoesStore.Services.Shoes.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +8,7 @@ using static ShoesStore.Data.DataConstants.Shoe;
 
 namespace ShoesStore.Models.Shoes
 {
-    public class ShoeFormModel
+    public class ShoeFormModel : IShoeModel
     {
         [Required]
         [StringLength(BrandMaxLength, MinimumLength = BrandMinLength)]

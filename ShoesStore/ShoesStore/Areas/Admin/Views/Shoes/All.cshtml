@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ShoeServiceModel>
+
+@{
+    ViewBag.Title = "Become Seller";
+}
+
+<h1>All Shoes</h1>
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Brand</th>
+            <th scope="col">Model</th>
+            <th scope="col">Size</th>
+            <th scope="col">Category</th>
+            <th scope="col">Approved</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var shoe in Model)
+        {
+        <tr>
+            <td scope="col">@shoe.Id</td>
+            <td scope="col">@shoe.Brand</td>
+            <td scope="col">@shoe.Model</td>
+            <td scope="col">@shoe.Size</td>
+            <td scope="col">@shoe.CategoryName</td>
+            <td scope="col">@(shoe.IsPublic ? "Yes" : "No")</td>
+            <td scope="col">
+                <a asp-area="" asp-controller="Shoes" asp-action="Details" asp-route-id="@shoe.Id" asp-route-information="@shoe.GetInformation()" class="btn btn-primary float-right ml-3">View</a>
+                <a asp-area="" asp-controller="Shoes" asp-action="Edit" asp-route-id="@shoe.Id" class="btn btn-warning float-right ml-3">Edit</a>
+                <a asp-area="Admin" asp-controller="Shoes" asp-action="ChangeVisibility" asp-route-id="@shoe.Id" class="btn btn-info float-right ml-3">@(shoe.IsPublic ? "Hide" : "Show")</a>
+                <a asp-area="" asp-controller="Shoes" asp-action="Delete" asp-route-id="@shoe.Id" class="btn btn-danger float-right ml-3">Delete</a>
+
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

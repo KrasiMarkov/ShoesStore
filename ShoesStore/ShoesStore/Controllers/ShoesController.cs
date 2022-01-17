@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShoesStore.Areas.Admin.Controllers;
 using ShoesStore.Data;
-using ShoesStore.Data.Infrastructure;
+using ShoesStore.Data.Infrastructure.Extensions;
 using ShoesStore.Data.Models;
 using ShoesStore.Models.Shoes;
 using ShoesStore.Services.Sellers;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static ShoesStore.WebConstants;
 
 namespace ShoesStore.Controllers
 {
@@ -26,6 +28,19 @@ namespace ShoesStore.Controllers
             this.shoes = shoes;
             this.sellers = sellers;
             this.mapper = mapper;
+        }
+
+
+        public IActionResult Details(int id, string information)
+        {
+            var shoe = this.shoes.Details(id);
+
+            if (information != shoe.GetInformation())
+            {
+                return BadRequest();
+            }
+
+            return View(shoe);
         }
 
         [Authorize]
@@ -93,7 +108,7 @@ namespace ShoesStore.Controllers
             }
 
 
-            this.shoes.Create(
+            var shoeId = this.shoes.Create(
                 shoe.Brand,
                 shoe.Model,
                 shoe.Size,
@@ -104,8 +119,9 @@ namespace ShoesStore.Controllers
                 shoe.CategoryId,
                 sellerId);
 
+            TempData[GlobalMessageKey] = $"Yours shoes was added {(this.User.IsAdmin() ? string.Empty : "and is awaiting for approval")}!";
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(Details), new { id = shoeId, information = shoe.GetInformation()});
 
         }
 
@@ -185,11 +201,12 @@ namespace ShoesStore.Controllers
                 shoe.Matter,
                 shoe.Description,
                 shoe.ImageUrl,
-                shoe.CategoryId);
+                shoe.CategoryId,
+                this.User.IsAdmin());
 
-          
+            TempData[GlobalMessageKey] = $"Yours shoes was edited {(this.User.IsAdmin() ? string.Empty : "and is awaiting for approval")}!";
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(Details), new { id, information = shoe.GetInformation() });
 
 
         }
