@@ -9,5 +9,10 @@ namespace ShoesStore
     {
         public const string GlobalMessageKey = "GlobalMessage";
 
+        public class Cache
+        {
+            public const string LatestShoesCacheKey = nameof(LatestShoesCacheKey);
+        }
+
     }
 }

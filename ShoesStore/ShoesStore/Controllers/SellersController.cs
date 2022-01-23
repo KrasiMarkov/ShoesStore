@@ -60,7 +60,7 @@ namespace ShoesStore.Controllers
 
             this.TempData[GlobalMessageKey] = "Thank you from becoming seller!";
 
-            return RedirectToAction("All", "Shoes");
+            return RedirectToAction(nameof(ShoesController.All), "Shoes");
 
         }
 
