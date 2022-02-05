@@ -25,6 +25,13 @@ namespace ShoesStore
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddDbContext<ShoesStoreDbContext>(options => options
             .UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -53,11 +60,15 @@ namespace ShoesStore
             services.AddTransient<IStatisticsService, StatisticsService>();
             services.AddTransient<ISellerService, SellerService>();
             services.AddTransient<IShoeService, ShoeService>();
+
+            
+
         }
 
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("MyPolicy");
 
             app.PrepareDatabase();
 
