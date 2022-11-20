@@ -24,6 +24,15 @@ namespace ShoesStore.Data
         public DbSet<Seller> Sellers { get; init; }
 
 
+        public DbSet<Cart> Carts { get; set; }
+
+
+        public DbSet<Order> Orders { get; set; }
+
+
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Shoe>()
@@ -45,7 +54,13 @@ namespace ShoesStore.Data
                  .HasForeignKey<Seller>(s => s.UserId)
                  .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Order>()
+                .HasMany(o => o.OrderDetails)
+                .WithOne(od => od.Order)
+                .HasForeignKey(k => k.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
 
+            
 
             base.OnModelCreating(builder);
             
