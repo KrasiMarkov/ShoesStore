@@ -46,5 +46,7 @@ namespace ShoesStore.Data.Models
         public int SellerId { get; init; }
 
         public Seller Seller { get; init; }
+
+        public decimal Price { get; set; }
     }
 }
