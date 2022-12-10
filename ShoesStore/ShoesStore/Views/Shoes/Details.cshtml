@@ -1,5 +1,14 @@
 ﻿@model ShoeDetailsServiceModel
 
-<div class="col-md-6 offset-3">
-    <h2>@Model.Brand @Model.Model</h2>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card" style="width: 30rem;">
+            <img class="card-img-top" src="@Model.ImageUrl" alt="Card image cap">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <h3>@Model.Brand @Model.Model</h3>
+    </div>
 </div>
+    
+    
