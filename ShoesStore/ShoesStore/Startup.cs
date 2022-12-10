@@ -12,7 +12,7 @@ using ShoesStore.Services.Sellers;
 using ShoesStore.Services.Shoes;
 using ShoesStore.Services.Statistics;
 using Microsoft.AspNetCore.Mvc;
-
+using ShoesStore.Services.ShoppingCart;
 
 namespace ShoesStore
 {
@@ -60,8 +60,11 @@ namespace ShoesStore
             services.AddTransient<IStatisticsService, StatisticsService>();
             services.AddTransient<ISellerService, SellerService>();
             services.AddTransient<IShoeService, ShoeService>();
+            services.AddTransient<IShoppingCartService, ShoppingCartService>();
 
-            
+            services.AddSession();
+            services.AddHttpContextAccessor();
+            services.AddScoped<ShoppingCartService>();
 
         }
 
@@ -83,11 +86,14 @@ namespace ShoesStore
                 app.UseHsts();
             }
 
+            
+
             app.UseHttpsRedirection()
                .UseStaticFiles()
                .UseRouting()
                .UseAuthentication()
                .UseAuthorization()
+               .UseSession()
                .UseEndpoints(endpoints =>
                {
                    endpoints.MapControllerRoute(

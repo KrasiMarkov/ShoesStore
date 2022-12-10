@@ -56,6 +56,7 @@ namespace ShoesStore.Services.Shoes
 
         bool CategoryExists(int categoryId);
 
+        public ShoeServiceModel GetShoeById(int id);
 
 
     }

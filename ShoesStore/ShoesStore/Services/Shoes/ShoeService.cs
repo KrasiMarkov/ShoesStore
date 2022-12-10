@@ -181,6 +181,11 @@ namespace ShoesStore.Services.Shoes
                    .ProjectTo<ShoeServiceModel>(this.mapper.ConfigurationProvider)
                     .ToList();
 
-
+        public ShoeServiceModel GetShoeById(int id)
+         =>   this.data
+                       .Shoes
+                       .Where(s => s.Id == id)
+                       .ProjectTo<ShoeServiceModel>(this.mapper.ConfigurationProvider)
+                       .FirstOrDefault();
     }
 }
