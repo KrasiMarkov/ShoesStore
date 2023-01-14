@@ -29,6 +29,8 @@ namespace ShoesStore.Data
             public const int MatterMaxLength = 30;
             public const int DescriptionMinLength = 10;
             public const int DescriptionMaxLength = 2000;
+            public const double PriceMinValue = 0;
+            public const double PriceMaxValue = 10000;
         }
 
         public class Category 

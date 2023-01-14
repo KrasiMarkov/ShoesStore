@@ -30,7 +30,6 @@ namespace ShoesStore.Controllers
             {
                 CartItems = cart.GetCartItems(),
                 CartTotal = cart.GetTotal()
-
             };
 
             return View(viewModel);
@@ -47,27 +46,26 @@ namespace ShoesStore.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        
         public IActionResult RemoveFromCart(int id)
         {
             var cart = shoppingCart;
 
-            string shoeName = shoppingCart.GetItem(id);
+            //string shoeName = cart.GetItem(id);
 
             int itemQuantity = cart.RemoveFromCart(id);
 
-            var results = new ShoppingCartRemoveViewModel()
-            {
-                Message = WebUtility.HtmlEncode(shoeName) +
-                              " has been removed from your shopping cart.",
+            //var results = new ShoppingCartRemoveViewModel()
+            //{
+            //    CartTotal = cart.GetTotal(),
+            //    CartQuantity = cart.GetCount(),
+            //    ItemQuantity = itemQuantity,
+            //    DeleteId = id
+            //};
 
-                CartTotal = cart.GetTotal(),
-                CartQuantity = cart.GetCount(),
-                ItemQuantity = itemQuantity,
-                DeleteId = id
-            };
+            //return json(results);
 
-            return Json(results);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -29,6 +29,7 @@ namespace ShoesStore.Services.Shoes
                 string matter,
                 string description,
                 string imageUrl,
+                decimal price,
                 int categoryId,
                 int sellerId);
 
@@ -41,6 +42,7 @@ namespace ShoesStore.Services.Shoes
                string matter,
                string description,
                string imageUrl,
+               decimal price,
                int categoryId,
                bool isPublic);
 

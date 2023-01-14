@@ -116,6 +116,7 @@ namespace ShoesStore.Controllers
                 shoe.Matter,
                 shoe.Description,
                 shoe.ImageUrl,
+                shoe.Price,
                 shoe.CategoryId,
                 sellerId);
 
@@ -201,6 +202,7 @@ namespace ShoesStore.Controllers
                 shoe.Matter,
                 shoe.Description,
                 shoe.ImageUrl,
+                shoe.Price,
                 shoe.CategoryId,
                 this.User.IsAdmin());
 

@@ -1,4 +1,5 @@
 ﻿using ShoesStore.Data.Models;
+using ShoesStore.Services.Shoes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,11 @@ namespace ShoesStore.Services.ShoppingCart.Models
 {
     public class ShoppingCartViewModel
     {
-        public List<Cart> CartItems { get; set; }
+        public List<CartServiceModel> CartItems { get; set; }
 
         public decimal CartTotal { get; set; }
+
+        
 
     }
 }

@@ -42,6 +42,10 @@ namespace ShoesStore.Models.Shoes
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
 
+        [Required]
+        [Range(PriceMinValue, PriceMaxValue)]
+        public decimal Price { get; init; }
+
         public IEnumerable<ShoeCategoryServiceModel> Categories { get; set; }
 
        

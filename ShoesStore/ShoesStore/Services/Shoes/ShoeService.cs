@@ -104,7 +104,7 @@ namespace ShoesStore.Services.Shoes
             this.data.SaveChanges();
         }
 
-        public int Create( string brand, string model, int size, string color, string matter, string description, string imageUrl, int categoryId, int sellerId)
+        public int Create( string brand, string model, int size, string color, string matter, string description, string imageUrl, decimal price, int categoryId, int sellerId)
         {
 
             var shoeData = new Shoe
@@ -116,6 +116,7 @@ namespace ShoesStore.Services.Shoes
                 Matter = matter,
                 Description = description,
                 ImageUrl = imageUrl,
+                Price = price,
                 CategoryId = categoryId,
                 SellerId = sellerId,
                 IsPublic = false
@@ -136,7 +137,7 @@ namespace ShoesStore.Services.Shoes
             .ProjectTo<ShoeDetailsServiceModel>(this.mapper.ConfigurationProvider)
             .FirstOrDefault();
 
-        public bool Edit(int id, string brand, string model, int size, string color, string matter, string description, string imageUrl, int categoryId, bool isPublic)
+        public bool Edit(int id, string brand, string model, int size, string color, string matter, string description, string imageUrl, decimal price, int categoryId, bool isPublic)
         {
             var shoeData = this.data.Shoes.Find(id);
 
@@ -152,6 +153,7 @@ namespace ShoesStore.Services.Shoes
             shoeData.Matter = matter;
             shoeData.Description = description;
             shoeData.ImageUrl = imageUrl;
+            shoeData.Price = price;
             shoeData.CategoryId = categoryId;
             shoeData.IsPublic = isPublic;
 

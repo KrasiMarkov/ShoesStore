@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShoesStore.Data.Models;
 using ShoesStore.Services.Shoes;
+using ShoesStore.Services.ShoppingCart.Models;
 
 namespace ShoesStore.Services.ShoppingCart
 {
@@ -15,7 +16,7 @@ namespace ShoesStore.Services.ShoppingCart
 
         void EmptyCart();
 
-        List<Cart> GetCartItems();
+        List<CartServiceModel> GetCartItems();
 
         string GetItem(int id);
 

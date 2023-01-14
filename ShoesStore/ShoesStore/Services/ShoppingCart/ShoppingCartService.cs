@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShoesStore.Data;
 using ShoesStore.Data.Models;
 using ShoesStore.Services.Shoes;
+using ShoesStore.Services.ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,9 +97,23 @@ namespace ShoesStore.Services.ShoppingCart
             data.SaveChanges();
         }
 
-        public List<Cart> GetCartItems()
+        public List<CartServiceModel> GetCartItems()
         {
-            return data.Carts.Where(cart => cart.CartId == ShoppingCartId).ToList();
+            var items = data
+                           .Carts
+                           .Where(cart => cart.CartId == ShoppingCartId)
+                           .Select(c => new CartServiceModel 
+                           {
+                               Id = c.Id,
+                               CartId = c.CartId, 
+                               Quantity = c.Quantity, 
+                               DateCreated = c.DateCreated,
+                               ShoeId = c.ShoeId,
+                               Shoe = c.Shoe
+                           })
+                           .ToList();
+
+            return items;
         }
 
         public int GetCount()
@@ -126,7 +141,7 @@ namespace ShoesStore.Services.ShoppingCart
 
         public int RemoveFromCart(int id)
         {
-            var cardItem = data.Carts.Single(cart => cart.CartId == ShoppingCartId && cart.Id == id);
+            var cardItem = data.Carts.Single(cart => cart.CartId == ShoppingCartId && cart.ShoeId == id);
 
             int itemQuantity = 0;
 
