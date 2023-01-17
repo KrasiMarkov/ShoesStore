@@ -1,0 +1,67 @@
+﻿@model OrderFormModel
+
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+
+            <h2 class="heading-margin">@ViewBag.Title</h2>
+
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-control" placeholder="Mike, Sean, John, etc....">
+                    <span asp-validation-for="FirstName" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" class="form-control" placeholder="Dow, Adams, Smith, etc....">
+                    <span asp-validation-for="LastName" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address"></label>
+                    <input asp-for="Address" class="form-control" placeholder="Bulgaria, Sofia, Dianabad, etc....">
+                    <span asp-validation-for="Address" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="City"></label>
+                    <input asp-for="City" class="form-control" placeholder="Sofia, Plovdiv, Burgas, etc....">
+                    <span asp-validation-for="City" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="State"></label>
+                    <input asp-for="State" class="form-control" placeholder="Sofia, Plovdiv, Burgas, etc....">
+                    <span asp-validation-for="State" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PostalCode"></label>
+                    <input asp-for="PostalCode" class="form-control" rows="4" placeholder="1000, 1172, 1430, etc.....">
+                    <span asp-validation-for="PostalCode" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Country"></label>
+                    <input asp-for="Country" class="form-control" placeholder="Bulgaria, USA, France, etc.....">
+                    <span asp-validation-for="Country" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Phone"></label>
+                    <input asp-for="Phone" class="form-control" placeholder="0884567654, 0876547895, 0893232341, etc.....">
+                    <span asp-validation-for="Phone" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" placeholder="georgi05@gmail.com, krasi@gmail.com, rumi2@gmail.com, etc.....">
+                    <span asp-validation-for="Email" class="small text-danger"></span>
+                </div>
+
+
+                <input class="btn btn-primary" type="submit" value="Confirm" />
+            </form>
+        </div>
+    </div>
+
+</div>
+

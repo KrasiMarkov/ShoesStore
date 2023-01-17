@@ -24,7 +24,7 @@ namespace ShoesStore.Services.ShoppingCart
 
         decimal GetTotal();
 
-        int CreateOrder(Order order);
+        int CreateOrderDetails(Order order);
 
     }
 }

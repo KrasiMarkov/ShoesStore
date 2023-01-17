@@ -21,7 +21,7 @@ namespace ShoesStore.Controllers
             this.shoppingCart = shoppingCart;
             this.shoe = shoe;
         }
-
+         
         public IActionResult Index()
         {
             var cart = shoppingCart;

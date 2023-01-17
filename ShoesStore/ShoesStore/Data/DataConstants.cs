@@ -44,8 +44,26 @@ namespace ShoesStore.Data
             public const int NameMaxLength = 25;
             public const int PhoneNumberMinLength = 6;
             public const int PhoneNumberMaxLength = 30;
+        }
 
-
+        public class Checkout 
+        {
+            public const int FirstNameMinLength = 2;
+            public const int FirstNameMaxLength = 25;
+            public const int LastNameMinLength = 2;
+            public const int LastNameMaxLength = 25;
+            public const int AddressMinLength = 10;
+            public const int AddressMaxLength = 50;
+            public const int CityMinLength = 2;
+            public const int CityMaxLength = 20;
+            public const int StateMinLength = 2;
+            public const int StateMaxLength = 20;
+            public const int PostalCodeMinLength = 4;
+            public const int PostalCodeMaxLength = 8;
+            public const int CountryMinLength = 4;
+            public const int CountryMaxLength = 20;
+            public const int PhoneMinLength = 10;
+            public const int PhoneMaxLength = 15;
         }
 
     }

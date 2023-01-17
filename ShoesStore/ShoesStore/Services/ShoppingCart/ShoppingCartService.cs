@@ -55,7 +55,7 @@ namespace ShoesStore.Services.ShoppingCart
             data.SaveChanges();
         }
 
-        public int CreateOrder(Order order)
+        public int CreateOrderDetails(Order order)
         {
             decimal orderTotal = 0;
 
@@ -73,12 +73,12 @@ namespace ShoesStore.Services.ShoppingCart
 
                 orderTotal += (item.Quantity * item.Shoe.Price);
 
-                data.OrderDetails.Add(orderDetail);
+                this.data.OrderDetails.Add(orderDetail);
             }
 
             order.Total = orderTotal;
 
-            data.SaveChanges();
+            this.data.SaveChanges();
 
             EmptyCart();
 

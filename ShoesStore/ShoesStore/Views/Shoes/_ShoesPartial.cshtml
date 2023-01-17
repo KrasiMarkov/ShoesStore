@@ -20,6 +20,11 @@
                     <div class="product-content">
                         <h3 class="title"><a href="#">@shoe.Brand @shoe.Model</a></h3>
                         <div class="price">$@shoe.Price <span>$68.88</span></div>
+                        @if (ViewBag.AllowShoeEdit == true || User.IsAdmin())
+                        {
+                            <a asp-controller="Shoes" asp-action="Edit" asp-route-id="@shoe.Id" class="btn btn-warning">Edit</a>
+                            <a asp-controller="Shoes" asp-action="Delete" asp-route-id="@shoe.Id" class="btn btn-danger">Delete</a>
+                        }
                     </div>
                 </div>
 

@@ -13,6 +13,7 @@ using ShoesStore.Services.Shoes;
 using ShoesStore.Services.Statistics;
 using Microsoft.AspNetCore.Mvc;
 using ShoesStore.Services.ShoppingCart;
+using ShoesStore.Services.Checkout;
 
 namespace ShoesStore
 {
@@ -61,6 +62,7 @@ namespace ShoesStore
             services.AddTransient<ISellerService, SellerService>();
             services.AddTransient<IShoeService, ShoeService>();
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
+            services.AddTransient<ICheckoutService, CheckoutService>();
 
             services.AddSession();
             services.AddHttpContextAccessor();
