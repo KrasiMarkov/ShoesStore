@@ -1,6 +1,6 @@
 ﻿@model ShoeDetailsServiceModel
 
-<div class="row">
+@*<div class="row">
     <div class="col-sm-6">
         <div class="card" style="width: 30rem;">
             <img class="card-img-top" src="@Model.ImageUrl" alt="Card image cap">
@@ -9,8 +9,66 @@
     <div class="col-sm-6">
         <h3>@Model.Brand @Model.Model</h3>
         <h3>@Model.Size</h3>
-        <a href="#" class="btn btn-primary">Order Now</a>
+        <h3>@Model.CategoryName</h3>
+        <h3>@Model.Color</h3>
+        <h3>@Model.Matter</h3>
+        <p>@Model.Description</p>
+        <h3>$ @Model.Price</h3>
+        <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@Model.Id" class="btn btn-primary">Order Now</a>
     </div>
+</div>*@
+
+<div class="container">
+	<div class="card">
+		<div class="container-fliud">
+			<div class="wrapper row">
+				<div class="preview col-md-6">
+
+					<div class="preview-pic tab-content">
+						<div class="tab-pane active" id="@Model.Id"><img src="@Model.ImageUrl" /></div>
+						@*<div class="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252" /></div>
+						<div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252" /></div>
+						<div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
+						<div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252" /></div>*@
+					</div>
+					@*<ul class="preview-thumbnail nav nav-tabs">
+						<li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+						<li><a data-target="#pic-2" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+						<li><a data-target="#pic-3" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+						<li><a data-target="#pic-4" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+						<li><a data-target="#pic-5" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+					</ul>*@
+
+				</div>
+				<div class="details col-md-6">
+					<h3 class="product-title">@(Model.Brand + " " + Model.Model) </h3>
+					<div class="rating">
+						<div class="stars">
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+						</div>
+						<span class="review-no">41 reviews</span>
+					</div>
+					<p class="product-description">@Model.Description</p>
+					<h4 class="price">current price: <span>$@Model.Price</span></h4>
+					<p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+					<h5 class="sizes">
+						size: @Model.Size
+					</h5>
+					<h5 class="colors">
+						color: @Model.Color 
+					</h5>
+					<div class="action">
+						<a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@Model.Id" class="add-to-cart btn btn-default" type="button">add to cart</a>
+						<button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
     
 
