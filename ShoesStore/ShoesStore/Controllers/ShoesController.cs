@@ -46,7 +46,7 @@ namespace ShoesStore.Controllers
         [Authorize]
         public IActionResult Add()
         {
-            if (!this.sellers.IsSeller(this.User.Id()))
+            if (!this.sellers.IsSeller(this.User.GetId()))
             {
                 return RedirectToAction(nameof(SellersController.Become), "Sellers");
             }
@@ -86,7 +86,7 @@ namespace ShoesStore.Controllers
         {
 
 
-            var sellerId = this.sellers.IdByUser(this.User.Id());
+            var sellerId = this.sellers.IdByUser(this.User.GetId());
 
 
             if (sellerId == 0)
@@ -129,7 +129,7 @@ namespace ShoesStore.Controllers
         [Authorize]
         public IActionResult Mine()
         {
-            var myShoes = this.shoes.ByUsers(this.User.Id());
+            var myShoes = this.shoes.ByUsers(this.User.GetId());
 
             return View(myShoes);
         }
@@ -137,7 +137,7 @@ namespace ShoesStore.Controllers
         [Authorize]
         public IActionResult Edit(int id)
         {
-            var userId = this.User.Id();
+            var userId = this.User.GetId();
 
             if (!this.sellers.IsSeller(userId) && !User.IsAdmin())
             {
@@ -165,7 +165,7 @@ namespace ShoesStore.Controllers
         [Authorize]
         public IActionResult Edit(int id, ShoeFormModel shoe)
         {
-            var sellerId = this.sellers.IdByUser(this.User.Id());
+            var sellerId = this.sellers.IdByUser(this.User.GetId());
 
 
             if (sellerId == 0 && !User.IsAdmin())
@@ -212,6 +212,36 @@ namespace ShoesStore.Controllers
 
 
         }
+
+        public IActionResult Delete(int id) 
+        {
+            var sellerId = sellers.IdByUser(this.User.GetId());
+
+            if (sellerId == 0 && !User.IsAdmin()) 
+            {
+				return RedirectToAction(nameof(SellersController.Become), "Sellers");
+			}
+
+			if (!this.shoes.IsBySeller(id, sellerId) && !User.IsAdmin())
+			{
+				return BadRequest();
+			}
+
+            var deletedShoes = this.shoes.Delete(id);
+
+            if (!deletedShoes) 
+            {
+                return BadRequest();
+            }
+
+			TempData[GlobalMessageKey] = $"Your shoes was deleted!";
+
+
+			return RedirectToAction(nameof(ShoesController.Mine), "Shoes");
+
+		}
+
+
 
 
 

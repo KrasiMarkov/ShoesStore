@@ -31,7 +31,7 @@ namespace ShoesStore.Controllers
         [HttpPost]
         public IActionResult Become(BecomeSellerFormModel seller)
         {
-            var userId = this.User.Id();
+            var userId = this.User.GetId();
 
 
             var userIsAlreadySeller = this.data

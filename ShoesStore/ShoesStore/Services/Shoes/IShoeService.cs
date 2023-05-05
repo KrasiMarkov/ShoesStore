@@ -46,6 +46,8 @@ namespace ShoesStore.Services.Shoes
                int categoryId,
                bool isPublic);
 
+        bool Delete(int id);
+
         bool IsBySeller(int shoeId, int sellerId);
 
         void ChangeVisibility(int shoeId);

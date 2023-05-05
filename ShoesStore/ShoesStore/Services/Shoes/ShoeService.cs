@@ -189,5 +189,20 @@ namespace ShoesStore.Services.Shoes
                        .Where(s => s.Id == id)
                        .ProjectTo<ShoeServiceModel>(this.mapper.ConfigurationProvider)
                        .FirstOrDefault();
-    }
+
+		public bool Delete(int id)
+		{  
+			var shoes = this.data.Shoes.Find(id);
+
+            var carts = this.data.Carts.Where(s => s.ShoeId == id).ToList();
+
+            this.data.Carts.RemoveRange(carts);
+
+            this.data.Shoes.Remove(shoes);
+
+            this.data.SaveChanges();
+
+            return true;
+		}
+	}
 }
